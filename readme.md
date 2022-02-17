@@ -1,21 +1,89 @@
 # cv2
 
-### cv2.imread('이미지 파일이름')
+### cv2.imread('img')
+ - img : 이미지 파일이름
  - 이미지를 가져옴(컬러)
-### cv2.imread('이미지 파일이름', cv2.IMREAD_GRAYSCALE)
+### cv2.imread('img', cv2.IMREAD_GRAYSCALE)
  - 위 코드(cv2.imread('이미지 파일이름')와 다르게 디폴트가 아닌 흑백으로 가져옴.
+ - img : 이미지 파일이름
 ### cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB) 
  - BGR 순으로 읽는것을 RGB순으로 읽게함.
 
-### cv2.nameWindow('창 이름')
+### cv2.nameWindow('window')
  - 괄호안에 있는 이름의 창을 만듬
-### cv2.imshow('창 이름', 이미지) 
+ - window : 창 이름
+### cv2.imshow('window', 이미지) 
  - 따음표 안에 있는 이름의 창에 이미지를 넣음.
+ - window : 창 이름
 ### cv2.waitKey() 
  - 키가 눌릴때까지 기다림.(이게 없으면 창이 바로 닫힘)
 
 
+## OpenCV 그리기 함수
+ - 영상에 선, 도형, 문자열을 출력하는 그리기 함수를 제공
+ - 선그리기 : 직선, 화살표, 마커 등
+ - 도형 그리기 : 사각형, 원, 타원, 다각형 등 
+ - 문자열 출력
+## 주의점 
+ - 그리기 알고리즘을 이용하여 영상의 픽셀 값 자체를 변경
+  -> 원본영상이 필요하면 복사본을 만들어서 그리기 & 출력
+ - 그레이 스케일 영상에는 컬러로 그리기 안 됨
+  -> cv2.cvtColor()함수로 BGR컬러 영상으로 변환한 후 그리기 함수 호출  
+### 직선 그리기
+### cv2.line(img, pt1, pt2, color, thickness=None, lineType=None, shift=None) -> img
+ - img : 그림을 그릴 영상
+ - pt1, pt2 : 직선의 시작점과 끝점. (x, y)튜플.
+ - color : 선 색상 또는 밝기. (B, G, R)튜플 또는 정수값.
+ - thickness : 선 두께. 기본값은 1.
+ - lineType : 선 타입.cv2.LINE_4,cv2>LINE_8,LINE_AA중 선택. 기본값은 cv2.LINE_8
+ - shift : 그리기 좌표값의 축소 비율. 기본값은 0.
+### 사각형 그리기
+### cv2.rectangle(img, pt1, pt2, color, thickness=None, lineTpe=None, shift=None) -> img
+### cv2.rectangle(img, rec, color, thickness=None, lineType=None, shift=None) -> img
+ - img : 그림을 그릴 영상
+ - pt1, pt2 : 사각형의 두 꼭지점 좌표.(x, y)튜플.
+ - rec : 사각형 위치 정보. (x, y, w, h)튜플.
+ - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
+ - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
+ - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
+ - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
 
+### 원그리기
+### cv2.circle(img, center, radius, color, thickness=None, lineTpe=None, shift=None) -> img 
+ - img : 그림을 그릴 영상
+ - center : 원의 중심 좌표.(x, y)튜플
+ - radius : 원의 반지름
+ - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
+ - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
+ - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
+ - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
+### 다각형 그리기
+### cv2.polylines(img, pts, isClosed, color, thickness=None, lineTpe=None, shift=None) -> img
+ - img : 그림을 그릴 영상
+ - pts : 다각형 외각 점들의 좌표 배열.numpy.ndarray의 리스트.
+ - isClosed : 폐곡선 여부. True 또는 False 지정.
+ - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
+ - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
+ - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
+ - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
+ 
+### 문자열 출력
+### cv2.putText(img, text, org, fonFace, fonScale, color, thickeness=None, lineType=None, bottomLeftOrigin=None) -> img
+ - img : 그림을 그릴 영상 
+ - text : 출력할 문자열
+ - org : 영상에서 문자열을 출력할 위치의 좌측 하단 좌표.(x, y)튜플
+ - fontFace : 폰트 종류. cv.FONT_HERSHEY_로 시작하는 상수 중 선택
+ - fontScale : 폰트 크기 확대/축소 비율
+ - color : 선 색상 또는 밝기. (B, G, R)튜플 또는 정수값.
+ - thickness:선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
+ - lineType : 선 타입. cv2_LINE_4, cv2_LINE_8, cv2_LINE_AA 중 선택.
+ - bottonLeftOrigin : True이면 영상의 좌측 하단을 워넞믕로 간주. 기본값은 false.
+ 
+ 
+ 
+ 
+ 
+ 
 # matplotlib
 (import matplot.pyplot as plt)
 
