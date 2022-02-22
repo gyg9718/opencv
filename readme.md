@@ -88,7 +88,7 @@
   - retval : cv2.VideoCapture 객체
 
  ### cv2.VideoCapture.open(index, apiPreference=None) -> retval
-  - retval : 성공하면 true, 실패하면 false
+  - retval : 성공하면 True, 실패하면 False
 
 ### 동영상, 정지 영상 시퀀스, 비디오 스트림 열기
 ### cv2.VideoCapture(filename, apiPreference=None) -> retval
@@ -96,27 +96,34 @@
  - apiPreference : 선호하는 동영상 처리 방법을 지정
  - retval : cv2.VideoCapture 객체
 ### cv2.VideoCapture(filename, apiPreference=None) -> retval
-  - retval : 성공하면 true, 실패하면 false
+  - retval : 성공하면 True, 실패하면 False
 
 ### 비디오 캡쳐가 준비되었는지 확인
 ### cv2.VideoCapture.isOpened() -> retval
-  - retval : 성공하면 true, 실패하면 false
+  - retval : 성공하면 True, 실패하면 False
 ### 프레임 받아오기
 ### cv2.VideoCapture.read(image=None) -> retval, image
-   - retval : 성공하면 true, 실패하면 false
+   - retval : 성공하면 True, 실패하면 False
    - image : 현재 프레임(numpy.ndarray)
 ### 카메라, 비디오 장치 속성 값 참조
 ### cv2.VideoCapture.get(propid) -> retval
- - propid : 속성상수.(OpenCV문서 참조)
- 
- |--------------------|---------------|
- |CAP_PROP_FRAME_WIDTH|프레임 가로 크기|
- |CAP_PROP_FRAME_HEIGHT|프레임 세로 크기|
- |CAP_PROP_FPS|초당 프레임 수|
- |CAP_PROP_FRAME_COUNT|비디오 파일의 총 프레임 수|
- |CAP_PROP_POS_MSEC|밀리초 단위로 현재 위치|
- |CAP_PRO_POS_FRAMES|현재 프레임 번호|
- |CAP_PROP_EXPOSURE|노출|
+ - propid : 속성상수.(OpenCV 문서 참조)
+
+|속성|역할|
+|---|---|
+|CAP_PROP_FRAME_WIDTH|프레임 가로 크기|
+|CAP_PROP_FRAME_HEIGHT|프레임 세로 크기|
+|CAP_PROP_FPS|초당 프레임 수|
+|CAP_PROP_FRAME_COUNT|비디오 파일의 총 프레임 수|
+|CAP_PROP_POS_MSEC|밀리초 단위로 현재 위치|
+|CAP_PRO_POS_FRAMES|현재 프레임 번호|
+|CAP_PROP_EXPOSURE|노출|
+ - retval : 성공하면 해당 속성 값, 실패하면 0.
+### 카메라, 비디오 장치 속성 값 참조
+### cv2.VideoCapture.set(propId, value) -> retval
+ - propld : 속성 상수
+ - value : 속성 값
+ - retvla : 성공하면 Truem 실패하면 false.
 # matplotlib
 (import matplot.pyplot as plt)
 
