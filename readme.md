@@ -108,7 +108,15 @@
 ### 카메라, 비디오 장치 속성 값 참조
 ### cv2.VideoCapture.get(propid) -> retval
  - propid : 속성상수.(OpenCV문서 참조)
- - 
+ 
+ |--------------------|---------------|
+ |CAP_PROP_FRAME_WIDTH|프레임 가로 크기|
+ |CAP_PROP_FRAME_HEIGHT|프레임 세로 크기|
+ |CAP_PROP_FPS|초당 프레임 수|
+ |CAP_PROP_FRAME_COUNT|비디오 파일의 총 프레임 수|
+ |CAP_PROP_POS_MSEC|밀리초 단위로 현재 위치|
+ |CAP_PRO_POS_FRAMES|현재 프레임 번호|
+ |CAP_PROP_EXPOSURE|노출|
 # matplotlib
 (import matplot.pyplot as plt)
 
