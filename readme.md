@@ -4,7 +4,7 @@
  - img : 이미지 파일이름
  - 이미지를 가져옴(컬러)
 ### cv2.imread('img', cv2.IMREAD_GRAYSCALE)
- - 위 코드(cv2.imread('이미지 파일이름')와 다르게 디폴트가 아닌 흑백으로 가져옴.
+ - 위 코드(cv2.imread('img')와 다르게 디폴트가 아닌 흑백으로 가져옴.
  - img : 이미지 파일이름
 ### cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB) 
  - BGR 순으로 읽는것을 RGB순으로 읽게함.
@@ -79,11 +79,36 @@
  - lineType : 선 타입. cv2_LINE_4, cv2_LINE_8, cv2_LINE_AA 중 선택.
  - bottonLeftOrigin : True이면 영상의 좌측 하단을 워넞믕로 간주. 기본값은 false.
  
+ ## 카메라 동영상 처리하기
  
- 
- 
- 
- 
+ ### 카메라 열기
+ ### cv2.VideoCapture(index, apiPreference=None) -> retval
+  - index : camera_id + domain_offset_id
+  - apiPreference : 선호하는 카메라 처리 방법을 지정
+  - retval : cv2.VideoCapture 객체
+
+ ### cv2.VideoCapture.open(index, apiPreference=None) -> retval
+  - retval : 성공하면 true, 실패하면 false
+
+### 동영상, 정지 영상 시퀀스, 비디오 스트림 열기
+### cv2.VideoCapture(filename, apiPreference=None) -> retval
+ - filename : 비디오 파일 이름, 정지 영상 시퀀스, 비디오 스트림 URL등(e.g)'video.avi', 'img_%02d.jpg', 'protocol://host:port/scrip?params|auth'
+ - apiPreference : 선호하는 동영상 처리 방법을 지정
+ - retval : cv2.VideoCapture 객체
+### cv2.VideoCapture(filename, apiPreference=None) -> retval
+  - retval : 성공하면 true, 실패하면 false
+
+### 비디오 캡쳐가 준비되었는지 확인
+### cv2.VideoCapture.isOpened() -> retval
+  - retval : 성공하면 true, 실패하면 false
+### 프레임 받아오기
+### cv2.VideoCapture.read(image=None) -> retval, image
+   - retval : 성공하면 true, 실패하면 false
+   - image : 현재 프레임(numpy.ndarray)
+### 카메라, 비디오 장치 속성 값 참조
+### cv2.VideoCapture.get(propid) -> retval
+ - propid : 속성상수.(OpenCV문서 참조)
+ - 
 # matplotlib
 (import matplot.pyplot as plt)
 
