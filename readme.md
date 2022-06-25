@@ -1,135 +1,48 @@
-# cv2
+# 정밀도
+ #### 정밀도란 이미지가 얼마나 많은 색상을 표현할 수 있느냐를 의미한다. 
+ ##### 정밀도는 색상을 표현하는 방법 중 하나이다. 정밀도가 높을수록 많은 색상을 표현할 수 있어 데이터의 폭이 넓어지고 더 자연스러운 이미지로 표시된다. 반대로 정밀도가 낮을수록 육안으로 확인하기 힘들 정도로 이미지의 변형이 가해지며 데이터의 개수가 줄어든다. 일반적으로 정밀도가 높을수록 데이터의 양이 많아져 정밀한 처리를 할 수 있다. 정밀도가 높을수록 데이터의 처리 결과는 더 정밀하다.
 
-### cv2.imread('img')
- - img : 이미지 파일이름
- - 이미지를 가져옴(컬러)
-### cv2.imread('img', cv2.IMREAD_GRAYSCALE)
- - 위 코드(cv2.imread('img')와 다르게 디폴트가 아닌 흑백으로 가져옴.
- - img : 이미지 파일이름
-### cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB) 
- - BGR 순으로 읽는것을 RGB순으로 읽게함.
+## 비트표현
+ ```
+ 비트는 색상의 표현 개수를 설정한다. 색상을 표현하는 방식은 n-bit로 표현하며 n은 비트의 수를 의미한다. 이때 n의 이미는 2^n이므로 1-bit는 2의 값을 갖게된다. 
+ 1-bit의 경우 0과 1의 값만 갖게 되는데 중요한점은 두가지 색상이 아닌 두가지 숫자로 색상을 표현한다는 점이다. 
+ 가령 8-bit의 경우 2^8이 되어 256가지 값을 갖게 된다. 
+ (색상을 표현할 때 적어도 8비트여야 유의미한 데이터를 얻게되어 색상을 표현할 수 있다 
+ 즉, 8비트 정밀도를 사용할 때 흑백 색상을 원활하게 표현할 수 있다.)
+ ```
+ - 1비트 이미지 - 이진화(binary)이미지 
+ - 4비트 이미지 - 저화질 이미지
+ - 8비트 이미지 - 고화질 이미지
 
-### cv2.nameWindow('window')
- - 괄호안에 있는 이름의 창을 만듬
- - window : 창 이름
-### cv2.imshow('window', 이미지) 
- - 따음표 안에 있는 이름의 창에 이미지를 넣음.
- - window : 창 이름
-### cv2.waitKey() 
- - 키가 눌릴때까지 기다림.(이게 없으면 창이 바로 닫힘)
+## Opencv 정밀도 표현법
+#### Opencv에서는 8비트 정밀도 이미지를 표현할 때 UB의 정밀도 값을 가장 많이 활용한다. 여기서 UB는 unsinged 8-bit integers를 의미한다.
+ -  unsiged - 부호없음, integers - 정수형 -> unsinged 8-bit integers - 부호가 없는 8비트 정수형 (대부분의 정밀도 표현은 0~255의 값으로 색상을 표현한다.)
+#### Python Oencv의 정밀도 표현법
+```
+color = np.zeros((height, width, 3), np.unit8)
+gray = np.zeros((rows, cols, 1), np.unit8)
+```
+#### 아래의 표는 Python Opencv의 정밀도 표이다.
+|OpenCV 형식|데이터 형식|의미|
+|------|---|---|
+|np.unit8|byte|8-bit unsinged integers|
+|np.int8|sbyte|8-bit singed integers|
+|np.unit16|unit16|16-bit unsinged integers|
+|np.int16|int16|16-bit singed integers|
+|np.float32|float|32-bit floating point number|
+|np.double|double|64-bit floating point number|
 
-
-## OpenCV 그리기 함수
- - 영상에 선, 도형, 문자열을 출력하는 그리기 함수를 제공
- - 선그리기 : 직선, 화살표, 마커 등
- - 도형 그리기 : 사각형, 원, 타원, 다각형 등 
- - 문자열 출력
-## 주의점 
- - 그리기 알고리즘을 이용하여 영상의 픽셀 값 자체를 변경
-  -> 원본영상이 필요하면 복사본을 만들어서 그리기 & 출력
- - 그레이 스케일 영상에는 컬러로 그리기 안 됨
-  -> cv2.cvtColor()함수로 BGR컬러 영상으로 변환한 후 그리기 함수 호출  
-### 직선 그리기
-### cv2.line(img, pt1, pt2, color, thickness=None, lineType=None, shift=None) -> img
- - img : 그림을 그릴 영상
- - pt1, pt2 : 직선의 시작점과 끝점. (x, y)튜플.
- - color : 선 색상 또는 밝기. (B, G, R)튜플 또는 정수값.
- - thickness : 선 두께. 기본값은 1.
- - lineType : 선 타입.cv2.LINE_4,cv2>LINE_8,LINE_AA중 선택. 기본값은 cv2.LINE_8
- - shift : 그리기 좌표값의 축소 비율. 기본값은 0.
-### 사각형 그리기
-### cv2.rectangle(img, pt1, pt2, color, thickness=None, lineTpe=None, shift=None) -> img
-### cv2.rectangle(img, rec, color, thickness=None, lineType=None, shift=None) -> img
- - img : 그림을 그릴 영상
- - pt1, pt2 : 사각형의 두 꼭지점 좌표.(x, y)튜플.
- - rec : 사각형 위치 정보. (x, y, w, h)튜플.
- - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
- - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
- - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
- - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
-
-### 원그리기
-### cv2.circle(img, center, radius, color, thickness=None, lineTpe=None, shift=None) -> img 
- - img : 그림을 그릴 영상
- - center : 원의 중심 좌표.(x, y)튜플
- - radius : 원의 반지름
- - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
- - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
- - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
- - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
-### 다각형 그리기
-### cv2.polylines(img, pts, isClosed, color, thickness=None, lineTpe=None, shift=None) -> img
- - img : 그림을 그릴 영상
- - pts : 다각형 외각 점들의 좌표 배열.numpy.ndarray의 리스트.
- - isClosed : 폐곡선 여부. True 또는 False 지정.
- - color : 선 색상 또는 밝기.(B, G, R)튜플 또는 정수값.
- - thickness : 선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
- - lineType : 선타입.cv2.LINE_4, cv2.LINE_8, cv2.LINE_AA 중 선택. 기본값은 cv2.LINE_8
- - shift : 그리기 좌표 값의 축소 비율. 기본값은 0.
+# 채널
+ - 채널은 그래픽스 이미지의 색상 정보를 담고 있다. 채널은 일반적으로 Red, Green, Blue와 추가로 Alpha로 구성된다. 이밖에도 Hue, Saturation, Value 등의 채널도 있다.
+ 색상을 표시할때는 주로 3~4개의채널을 사용하고 흑백 이미지를 표현할 때는 1채널을 사용한다(밝기만 조절하면 되어서).
  
-### 문자열 출력
-### cv2.putText(img, text, org, fonFace, fonScale, color, thickeness=None, lineType=None, bottomLeftOrigin=None) -> img
- - img : 그림을 그릴 영상 
- - text : 출력할 문자열
- - org : 영상에서 문자열을 출력할 위치의 좌측 하단 좌표.(x, y)튜플
- - fontFace : 폰트 종류. cv.FONT_HERSHEY_로 시작하는 상수 중 선택
- - fontScale : 폰트 크기 확대/축소 비율
- - color : 선 색상 또는 밝기. (B, G, R)튜플 또는 정수값.
- - thickness:선 두께. 기본값은 1.음수(-1)를 지정하면 내부를 채움.
- - lineType : 선 타입. cv2_LINE_4, cv2_LINE_8, cv2_LINE_AA 중 선택.
- - bottonLeftOrigin : True이면 영상의 좌측 하단을 워넞믕로 간주. 기본값은 false.
- 
- ## 카메라 동영상 처리하기
- 
- ### 카메라 열기
- ### cv2.VideoCapture(index, apiPreference=None) -> retval
-  - index : camera_id + domain_offset_id
-  - apiPreference : 선호하는 카메라 처리 방법을 지정
-  - retval : cv2.VideoCapture 객체
-
- ### cv2.VideoCapture.open(index, apiPreference=None) -> retval
-  - retval : 성공하면 True, 실패하면 False
-
-### 동영상, 정지 영상 시퀀스, 비디오 스트림 열기
-### cv2.VideoCapture(filename, apiPreference=None) -> retval
- - filename : 비디오 파일 이름, 정지 영상 시퀀스, 비디오 스트림 URL등(e.g)'video.avi', 'img_%02d.jpg', 'protocol://host:port/scrip?params|auth'
- - apiPreference : 선호하는 동영상 처리 방법을 지정
- - retval : cv2.VideoCapture 객체
-### cv2.VideoCapture(filename, apiPreference=None) -> retval
-  - retval : 성공하면 True, 실패하면 False
-
-### 비디오 캡쳐가 준비되었는지 확인
-### cv2.VideoCapture.isOpened() -> retval
-  - retval : 성공하면 True, 실패하면 False
-### 프레임 받아오기
-### cv2.VideoCapture.read(image=None) -> retval, image
-   - retval : 성공하면 True, 실패하면 False
-   - image : 현재 프레임(numpy.ndarray)
-### 카메라, 비디오 장치 속성 값 참조
-### cv2.VideoCapture.get(propid) -> retval
- - propid : 속성상수.(OpenCV 문서 참조)
-
-|속성|역할|
-|---|---|
-|CAP_PROP_FRAME_WIDTH|프레임 가로 크기|
-|CAP_PROP_FRAME_HEIGHT|프레임 세로 크기|
-|CAP_PROP_FPS|초당 프레임 수|
-|CAP_PROP_FRAME_COUNT|비디오 파일의 총 프레임 수|
-|CAP_PROP_POS_MSEC|밀리초 단위로 현재 위치|
-|CAP_PRO_POS_FRAMES|현재 프레임 번호|
-|CAP_PROP_EXPOSURE|노출|
- - retval : 성공하면 해당 속성 값, 실패하면 0.
-### 카메라, 비디오 장치 속성 값 참조
-### cv2.VideoCapture.set(propId, value) -> retval
- - propld : 속성 상수
- - value : 속성 값
- - retvla : 성공하면 Truem 실패하면 false.
-# matplotlib
-(import matplot.pyplot as plt)
-
-### plt.subplot(121), plt.axis('off'), plt.imshow(이미지) 
- - subplot 뒤 괄호안 순서대로 행, 열, (위치) plt.axis 는 창 안에 눈금표시 on/off(default : on).
-### plt.subplot(122), plt.axis('off'), plt.imshow(이미지, camp='gray')
- - 위plt.subplot(121), plt.axis('off'), plt.imshow(이미지)와 똑같고, 흑백으로 가져옴
-### plt.show()
- - 창을 띄움.
+ ### 색상표현
+  ##### 색상 이미지에서 RGB값만 추출한다고 해서 추출된 이미지가 빨간색으로 표현디ㅗ지는 않는다. 그 이유는 분리된 이미지를 한가지 채널로만 색상을 표현해야 하기 떄문이다.
+  ##### 각성분만 따로 분리해서 출력하면 흑백사진으로 나온다. 
+  
+ ### OpenCV 채널표현법
+ #### Python OpenCV에서의 채널 표현
+ ```
+ color = np.zeros((height, width, 3), np.unit8)
+ gray = np.zeros((rows, cols, 1), np.unit8)
+ ```
